@@ -97,6 +97,8 @@ class CommunicationHandler:
         :param bool host_starts: True if the user wants to start, False otherwise.
         :return: True if the game was initialized correctly, False otherwise.
         """
+        self.game_socket = self.comm_socket
+        self.game_socket.connect((ip_address, COMMUNICATION_PORT))
         self.send_message(OFFER_CODE, [host_starts])
         message_code, arguments = self.recv_message()
         while message_code != OFFER_ACCEPTED_CODE and message_code != OFFER_DECLINED_CODE:
