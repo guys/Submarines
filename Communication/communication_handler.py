@@ -15,6 +15,29 @@ COMMUNICATION_PORT = 1234
 FIELD_SIZE = 1
 LOCAL_ADDRESS = "0.0.0.0"
 
+TYPES_TO_CODES = {
+    "offer": 100,
+    "offer accepted": 101,
+    "offer denied": 102,
+    "ready": 103,
+    "guess": 110,
+    "guess_answer": 111,
+    "closing connection": 50,
+    "error": 99
+}
+HE_STARTS_CODE = 0
+YOU_START_CODE = 1
+
+MISS_CODE = 0
+HIT_CODE = 1
+SINK_CODE = 2
+WIN_CODE = 3
+
+INVALID_TYPE_ERROR_CODE = 0
+INVALID_OFFER_ERROR_CODE = 1
+INVALID_COORDINATES_ERROR_CODE = 2
+INVALID_ANSWER_ERROR_CODE = 3
+
 
 class CommunicationHandler:
     """
