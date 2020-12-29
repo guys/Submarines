@@ -28,3 +28,10 @@ class OnlineGameHandler:
         """
         self.my_turn = i_start
         self.game_socket = game_socket
+
+    def _change_turn(self):
+        """
+        this function is used to change the turn ownership.
+        :return: changes my_turn from True to False and vice-versa.
+        """
+        self.my_turn ^= 1
