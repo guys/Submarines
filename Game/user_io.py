@@ -60,17 +60,36 @@ class IOHandler:
             input_number = input(prompt_message)
         return int(input_number)
 
-    @staticmethod
-    def _is_submarine_input_valid(board, submarine_size, starting_position, direction):
+    def _is_submarine_input_valid(self, dimensions, submarines_positions, submarine_size, starting_position, direction):
         """
         a function to check io
-        :param list(list(tuple)) board: the board we check if the placement is valid on.
+        :param int dimensions: the dimensions of the board
+        :param list(tuple) submarines_positions: the positions currently occupied by submarines.
         :param int submarine_size: the size of the submarine we want to place.
         :param tuple starting_position: the x and y representing the wanted starting position of the submarine.
-        :param int direction: the direction of the submarine(up/down/right/left)
+        :param str direction: the direction of the submarine(up/down/right/left)
         :return: True if the submarine input is valid, False otherwise.
         """
-        pass
+        current_submarine_positions = self._calculate_submarine_positions_by_start_and_direction(
+            submarine_size, starting_position, direction)
+        for position in current_submarine_positions:
+            if position[0] < 0 or position[0] >= dimensions or position[1] < 0 or position[1] >= dimensions:
+                return False
+            if self._are_there_submarines_around(submarines_positions, position):
+                return False
+        return True
+
+    def _are_there_submarines_around(self, submarines_locations, position):
+        """
+        a function to check if there are submarines around a given position
+        :param list(tuple) submarines_locations: the locations of the submarines on the map.
+        :param tuple position: the position in question.
+        :return: True if there are submarines around the given position, False otherwise.
+        """
+        for direction, position_change in DIRECTION_TO_POSITION_CHANGE:
+            if (position[0] + position_change[0], position[1] + position_change[1]) in submarines_locations:
+                return True
+        return False
 
     def _calculate_submarine_positions_by_start_and_direction(self, submarine_size, starting_pos, direction):
         """
