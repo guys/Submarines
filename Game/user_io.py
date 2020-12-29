@@ -12,6 +12,13 @@
     29/12/2020 - Created
 """
 
+DIRECTION_TO_POSITION_CHANGE = {
+    "left": (-1, 0),
+    "right": (1, 0),
+    "up": (0, -1),
+    "down": (0, 1)
+}
+
 
 class IOHandler:
     """
@@ -64,3 +71,20 @@ class IOHandler:
         :return: True if the submarine input is valid, False otherwise.
         """
         pass
+
+    def _calculate_submarine_positions_by_start_and_direction(self, submarine_size, starting_pos, direction):
+        """
+        a function to calculate the positions that the submarine will occupy (done in order to check the validity)
+        :param int submarine_size: the size of the submarine
+        :param tuple starting_pos: the starting x and y of the submarine
+        :param str direction: the direction of the submarine
+        :return: a list of tuples of the positions that the submarine will occupy.
+        """
+        current_position = list(starting_pos)
+        occupied_positions = [starting_pos]
+        for _ in range(submarine_size - 1):
+            current_position[0] += DIRECTION_TO_POSITION_CHANGE[direction][0]
+            current_position[1] += DIRECTION_TO_POSITION_CHANGE[direction][1]
+            occupied_positions.append(tuple(current_position))
+
+        return occupied_positions
