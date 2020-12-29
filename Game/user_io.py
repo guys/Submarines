@@ -130,3 +130,12 @@ class IOHandler:
             occupied_positions.append(tuple(current_position))
 
         return occupied_positions
+
+    def ask_user_for_attack_input(self):
+        """
+        a function to get the x and y of the attack the user wants to carry out.
+        :return: a tuple of the x and y the user wants to attack.
+        """
+        attack_x = self._get_number_input("Please enter the x position of the attack:\n")
+        attack_y = self._get_number_input("Please enter the y position of the attack:\n")
+        return attack_x, attack_y
