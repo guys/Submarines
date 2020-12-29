@@ -77,4 +77,12 @@ class CommunicationHandler:
 
         return message_code, extra_arguments
 
+    def send_message(self, message_code, extra_arguments):
+        """
+        a function to send a message on the socket.
+        :param int message_code: the decimal code of the message
+        :param list extra_arguments: the extra arguments given in this message.
+        """
+        message_to_send = bytes([message_code] + extra_arguments)
+        self.game_socket.send(message_to_send)
 
