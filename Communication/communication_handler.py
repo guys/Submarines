@@ -90,6 +90,23 @@ class CommunicationHandler:
         self.send_message(OFFER_ACCEPTED_CODE, [])
         return arguments[0]
 
+    def init_game_as_guest(self, ip_address, host_starts):
+        """
+        This function initializes the game as a guest - connects to a given ip and tries to initialize the game.
+        :param str ip_address: the ip address of the host we want to connect to.
+        :param bool host_starts: True if the user wants to start, False otherwise.
+        :return: True if the game was initialized correctly, False otherwise.
+        """
+        self.send_message(OFFER_CODE, [host_starts])
+        message_code, arguments = self.recv_message()
+        while message_code != OFFER_ACCEPTED_CODE and message_code != OFFER_DECLINED_CODE:
+            self.send_message(ERROR_CODE, [INVALID_TYPE_ERROR_CODE])
+            message_code, arguments = self.recv_message()
+
+        if message_code == OFFER_ACCEPTED_CODE:
+            return True
+        return False
+
     def recv_message(self):
         """
         a function to receive a message from the other player.
