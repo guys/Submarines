@@ -107,7 +107,7 @@ class IOHandler:
         :param tuple position: the position in question.
         :return: True if there are submarines around the given position, False otherwise.
         """
-        for direction, position_change in DIRECTION_TO_POSITION_CHANGE:
+        for direction, position_change in DIRECTION_TO_POSITION_CHANGE.items():
             if (position[0] + position_change[0], position[1] + position_change[1]) in submarines_locations:
                 return True
         return False
