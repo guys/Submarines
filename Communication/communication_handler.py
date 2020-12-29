@@ -71,9 +71,10 @@ class CommunicationHandler:
         :return: a tuple of the message number and the list of the extra arguments
         """
         extra_arguments = []
-        message_number = list(self.game_socket.recv(FIELD_SIZE))[0]  # done in order to convert from bytes to a number
-        for _ in range(CODES_TO_NUMBER_OF_ARGUMENTS[message_number]):
+        message_code = list(self.game_socket.recv(FIELD_SIZE))[0]  # done in order to convert from bytes to a number
+        for _ in range(CODES_TO_NUMBER_OF_ARGUMENTS[message_code]):
             extra_arguments.append(list(self.game_socket.recv(FIELD_SIZE))[0])
 
-        return message_number, extra_arguments
+        return message_code, extra_arguments
+
 
