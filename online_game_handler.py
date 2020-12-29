@@ -19,15 +19,17 @@ class OnlineGameHandler:
     someone wins.
     """
 
-    def __init__(self, i_start, game_socket):
+    def __init__(self, i_start, game_socket, board_manager):
         """
         a C'tor for the OnlineGameHandler.
         :param bool i_start: True if we start the game, False otherwise.
         :param socket.socket game_socket: the socket on which the game runs.
+        :param BoardManager board_manager: the board manager for this client's game.
         :return: a new OnlineGameHandler is created.
         """
         self.my_turn = i_start
         self.game_socket = game_socket
+        self.board_manager = board_manager
 
     def _change_turn(self):
         """
