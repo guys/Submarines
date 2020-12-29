@@ -1,10 +1,10 @@
 """
-    Name: game_manager.py
+    Name: board_manager.py
 
-    Description: This file has a class of game manager - it contains the main control of the game - a board with
+    Description: This file has a class of board manager - it contains the main control of the board - a board with
                  submarines on it that returns an answer of an attack attempt.
 
-    Usage: from Game.game_manager import GameManager
+    Usage: from Game.board_manager import BoardManager
 
     Author: Guy Sugbeker
 
@@ -23,18 +23,18 @@ HIT_RETURN_VALUE = 1
 SINK_RETURN_VALUE = 2
 
 
-class GameManager:
+class BoardManager:
     """
-    a class for managing the game - contains the board of the game and returns answers to attack attempts
+    a class for managing the board - contains the board of the game and returns answers to attack attempts
     """
 
     def __init__(self, game_board):
         """
-        a C'tor for the game manager - sets the game board to be in the given state.
+        a C'tor for the board manager - sets the game board to be in the given state.
         :param list(list(tuple)) game_board: the game board which is a list of list of tuples that contain a status
                                              code for the cell(was hit or not) and the submarine in it(None if there is
                                              no submarine in it.
-        :return: a new GameManager instance is created.
+        :return: a new BoardManager instance is created.
         """
         self.game_board = game_board
 
