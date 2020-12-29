@@ -15,16 +15,17 @@ COMMUNICATION_PORT = 1234
 FIELD_SIZE = 1
 LOCAL_ADDRESS = "0.0.0.0"
 
-TYPES_TO_CODES = {
-    "offer": 100,
-    "offer accepted": 101,
-    "offer denied": 102,
-    "ready": 103,
-    "guess": 110,
-    "guess_answer": 111,
-    "closing connection": 50,
-    "error": 99
+CODES_TO_NUMBER_OF_ARGUMENTS = {
+    100: 1,
+    101: 0,
+    102: 0,
+    103: 0,
+    110: 2,
+    111: 1,
+    50: 0,
+    99: 1
 }
+
 HE_STARTS_CODE = 0
 YOU_START_CODE = 1
 
@@ -64,4 +65,15 @@ class CommunicationHandler:
         while connected_address != wanted_ip:
             self.game_socket, (connected_address, _) = self.comm_socket.accept()
 
+    def recv_message(self):
+        """
+        a function to receive a message from the other player.
+        :return: a tuple of the message number and the list of the extra arguments
+        """
+        extra_arguments = []
+        message_number = list(self.game_socket.recv(FIELD_SIZE))[0]  # done in order to convert from bytes to a number
+        for _ in range(CODES_TO_NUMBER_OF_ARGUMENTS[message_number]):
+            extra_arguments.append(list(self.game_socket.recv(FIELD_SIZE))[0])
+
+        return message_number, extra_arguments
 
