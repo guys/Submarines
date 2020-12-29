@@ -32,3 +32,11 @@ class Submarine:
         a function called when the submarine gets a hit - the number of parts is reduced by 1.
         """
         self.parts -= 1
+
+    def is_sinking(self):
+        """
+        a boolean function to check if the submarine is sinking. a submarine is considered as sinking if it has no
+        remaining parts.
+        :return: True if the submarine is sinking, False otherwise.
+        """
+        return self.parts == 0
