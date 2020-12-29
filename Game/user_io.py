@@ -30,7 +30,7 @@ class IOHandler:
         pass
 
     @staticmethod
-    def is_submarine_input_valid(board, submarine_size, starting_position, direction):
+    def _is_submarine_input_valid(board, submarine_size, starting_position, direction):
         """
         a function to check io
         :param list(list(tuple)) board: the board we check if the placement is valid on.
