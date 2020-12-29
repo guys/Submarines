@@ -10,7 +10,7 @@
     Change Log:
     29/12/2020 - Created
 """
-from socket import socket
+import socket
 COMMUNICATION_PORT = 1234
 FIELD_SIZE = 1
 LOCAL_ADDRESS = "0.0.0.0"
@@ -47,7 +47,7 @@ class CommunicationHandler:
     def __init__(self, comm_socket):
         """
         a C'tor for the handler - gets the socket on which the data will be transferred.
-        :param socket comm_socket: the socket that will be used to communicate.
+        :param socket.socket comm_socket: the socket that will be used to communicate.
         :return: a new CommunicationHandler is created.
         """
         self.comm_socket = comm_socket
