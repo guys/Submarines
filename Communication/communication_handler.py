@@ -74,6 +74,22 @@ class CommunicationHandler:
         while connected_address != wanted_ip:
             self.game_socket, (connected_address, _) = self.comm_socket.accept()
 
+    def _init_game_as_host(self):
+        """
+        a function to start the game as a host - needs to get the offer message from the other player and send response.
+        :return: a code that represent the starting player.
+        """
+        message_code, arguments = self.recv_message()
+        while message_code != OFFER_CODE or (arguments[0] != YOU_START_CODE and arguments[0] != HE_STARTS_CODE):
+            if message_code == OFFER_CODE:
+                self.send_message(ERROR_CODE, [INVALID_TYPE_ERROR_CODE])
+            else:
+                self.send_message(ERROR_CODE, [INVALID_OFFER_ERROR_CODE])
+            message_code, arguments = self.recv_message()
+
+        self.send_message(OFFER_ACCEPTED_CODE, [])
+        return arguments[0]
+
     def recv_message(self):
         """
         a function to receive a message from the other player.
