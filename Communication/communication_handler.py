@@ -71,9 +71,15 @@ class CommunicationHandler:
         :return: a tuple of the message number and the list of the extra arguments
         """
         extra_arguments = []
-        message_code = list(self.game_socket.recv(FIELD_SIZE))[0]  # done in order to convert from bytes to a number
+        try:
+            message_code = list(self.game_socket.recv(FIELD_SIZE))[0]  # done in order to convert from bytes to a number
+        except (socket.error, socket.timeout) as socket_exception:
+            return 50, []
         for _ in range(CODES_TO_NUMBER_OF_ARGUMENTS[message_code]):
-            extra_arguments.append(list(self.game_socket.recv(FIELD_SIZE))[0])
+            try:
+                extra_arguments.append(list(self.game_socket.recv(FIELD_SIZE))[0])
+            except (socket.error, socket.timeout) as socket_exception:
+                return 50, []
 
         return message_code, extra_arguments
 
@@ -82,7 +88,12 @@ class CommunicationHandler:
         a function to send a message on the socket.
         :param int message_code: the decimal code of the message
         :param list extra_arguments: the extra arguments given in this message.
+        :return: True if the sending was successful, False otherwise.
         """
         message_to_send = bytes([message_code] + extra_arguments)
-        self.game_socket.send(message_to_send)
+        try:
+            self.game_socket.send(message_to_send)
+        except (socket.error, socket.timeout) as socket_exception:
+            return False
+        return True
 
