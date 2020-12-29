@@ -18,8 +18,7 @@ class IOHandler:
     this class holds all of the functions in association with input from the user.
     """
 
-    @staticmethod
-    def get_board(board_dimensions, submarine_sizes):
+    def get_board(self, board_dimensions, submarine_sizes):
         """
         a function to get the board submarine placements from the user, will ask the user to enter a submarine starting
         position and a direction until all of the submarines are placed according to the rules.
@@ -28,6 +27,31 @@ class IOHandler:
         :return: a board of board_dimensions by board_dimensions that the submarines are placed on.
         """
         pass
+
+    def _get_submarine_input(self, submarine_size):
+        """
+        a function to get a single submarine input from the user.(starting position and direction)
+        :param int submarine_size: the size of the current submarine - will be used when prompting the message to the
+                                   user.
+        :return: the input of the user - the starting position as a tuple of tuple of x and y and the direction.
+        """
+        print(f"Please enter the starting position and the direction of the submarine of size {submarine_size}")
+        x_position = self._get_number_input("Please enter the x starting position of the submarine:\n")
+        y_position = self._get_number_input("Please enter the y starting position of the submarine:\n")
+        direction = input("Please enter the direction of the submarine (left, right, up or down):\n")
+        return (x_position, y_position), direction
+
+    def _get_number_input(self, prompt_message):
+        """
+        a function to get an input as a number - will try to get the input until it is numeric.
+        :param str prompt_message: the message that we want to prompt to the user.
+        :return: the numeric input as int.
+        """
+        input_number = ""
+        while not input_number.isnumeric():
+            print("The following input must be numeric!")
+            input_number = input(prompt_message)
+        return int(input_number)
 
     @staticmethod
     def _is_submarine_input_valid(board, submarine_size, starting_position, direction):
