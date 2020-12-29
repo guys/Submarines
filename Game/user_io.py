@@ -67,6 +67,8 @@ class IOHandler:
         x_position = self._get_number_input("Please enter the x starting position of the submarine:\n")
         y_position = self._get_number_input("Please enter the y starting position of the submarine:\n")
         direction = input("Please enter the direction of the submarine (left, right, up or down):\n")
+        while direction not in DIRECTION_TO_POSITION_CHANGE.keys():
+            direction = input("Please enter the direction of the submarine (left, right, up or down):\n")
         return (x_position, y_position), direction
 
     def _get_number_input(self, prompt_message):
