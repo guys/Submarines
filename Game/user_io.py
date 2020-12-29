@@ -11,13 +11,14 @@
     Change Log:
     29/12/2020 - Created
 """
-
+from Game.submarine import Submarine
 DIRECTION_TO_POSITION_CHANGE = {
     "left": (-1, 0),
     "right": (1, 0),
     "up": (0, -1),
     "down": (0, 1)
 }
+DEFAULT_CELL_VALUE = (0, None)
 
 
 class IOHandler:
@@ -33,7 +34,27 @@ class IOHandler:
         :param list(int) submarine_sizes: the sizes of submarines used in the game.
         :return: a board of board_dimensions by board_dimensions that the submarines are placed on.
         """
-        pass
+        board = []
+        for _ in range(board_dimensions):
+            board.append([DEFAULT_CELL_VALUE] * board_dimensions)
+
+        submarines_locations = []
+        for submarine_size in submarine_sizes:
+            starting_pos, direction = self._get_submarine_input(submarine_size)
+            while not self._is_submarine_input_valid(
+                    board_dimensions, submarines_locations, submarine_size, starting_pos, direction):
+
+                print("Invalid input for the submarine, please try again.")
+                starting_pos, direction = self._get_submarine_input(submarine_size)
+
+            current_submarine = Submarine(submarine_size)
+            for location in self._calculate_submarine_positions_by_start_and_direction(
+                    submarine_size, starting_pos, direction):
+
+                submarines_locations.append(location)
+                board[location[1]][location[0]] = (0, current_submarine)
+
+        return board
 
     def _get_submarine_input(self, submarine_size):
         """
