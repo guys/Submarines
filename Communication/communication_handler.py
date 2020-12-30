@@ -141,3 +141,11 @@ class CommunicationHandler:
             return False
         return True
 
+    def close_communication(self):
+        """
+        a function used to close the sockets for the cleanup of resources.
+        """
+        self.game_socket.close()
+        if self.comm_socket != self.game_socket:
+            self.comm_socket.close()
+
