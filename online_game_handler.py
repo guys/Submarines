@@ -43,7 +43,9 @@ class OnlineGameHandler:
         this function is used to run a single turn according to whose turn it is.
         :return: True if the game continues, False if it ends.
         """
-        pass
+        if self.my_turn:
+            return self.run_my_turn()
+        return self.run_rival_turn()
 
     def run_my_turn(self):
         """
