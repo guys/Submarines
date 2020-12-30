@@ -37,3 +37,24 @@ class OnlineGameHandler:
         :return: changes my_turn from True to False and vice-versa.
         """
         self.my_turn ^= 1
+
+    def run_turn(self):
+        """
+        this function is used to run a single turn according to whose turn it is.
+        :return: True if the game continues, False if it ends.
+        """
+        pass
+
+    def run_my_turn(self):
+        """
+        this function runs the turn of this user.
+        :return: True if the game continues, False if it ends.
+        """
+        pass
+
+    def run_rival_turn(self):
+        """
+        this function runs the turn when this is the rivals turn.
+        :return: True if the game continues, False if it ends.
+        """
+        pass
