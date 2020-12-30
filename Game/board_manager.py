@@ -57,7 +57,7 @@ class BoardManager:
         attacked_submarine = cell_attacked[TUPLE_SUBMARINE_POSITION]
 
         if cell_attacked[TUPLE_STATUS_CODE_POSITION] == NOT_HIT_STATUS_CODE and attacked_submarine:
-            cell_attacked[TUPLE_STATUS_CODE_POSITION] = WAS_HIT_STATUS_CODE
+            self.game_board[attack_y][attack_x] = (WAS_HIT_STATUS_CODE, attacked_submarine)
             attacked_submarine.take_hit()
             if attacked_submarine.is_sinking():
                 self.number_of_submarines -= 1
