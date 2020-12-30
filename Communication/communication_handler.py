@@ -36,7 +36,7 @@ CODES_TO_NUMBER_OF_ARGUMENTS = {
 }
 
 GUEST_STARTS_CODE = 0
-HOST_START_CODE = 1
+HOST_STARTS_CODE = 1
 
 MISS_CODE = 0
 HIT_CODE = 1
@@ -81,7 +81,7 @@ class CommunicationHandler:
         :return: a code that represent the starting player.
         """
         message_code, arguments = self.recv_message()
-        while message_code != OFFER_CODE or (arguments[0] != YOU_START_CODE and arguments[0] != HE_STARTS_CODE):
+        while message_code != OFFER_CODE or (arguments[0] != HOST_STARTS_CODE and arguments[0] != GUEST_STARTS_CODE):
             if message_code == OFFER_CODE:
                 self.send_message(ERROR_CODE, [INVALID_TYPE_ERROR_CODE])
             else:
