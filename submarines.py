@@ -98,7 +98,12 @@ def main():
         print(USAGE_MESSAGE)
         return ERROR_RETURN_CODE
     wanted_rival_ip = sys.argv[1]
-    comm_handler, is_starting = init_communication_handler(wanted_rival_ip)
+    try:
+        comm_handler, is_starting = init_communication_handler(wanted_rival_ip)
+    except (socket.error, OSError) as connection_error:
+        print("There was a connection error.")
+        return ERROR_RETURN_CODE
+
     run_game(comm_handler, is_starting)
     return OK_RETURN_CODE
 
