@@ -89,6 +89,7 @@ def run_game(comm_handler, is_starting):
     board = io_handler.get_board(BOARD_DIMENSIONS, SUBMARINE_SIZES)
     board_manager = BoardManager(board, len(SUBMARINE_SIZES))
     game_handler = OnlineGameHandler(is_starting, board_manager, io_handler, comm_handler)
+    comm_handler.send_wait_ready()
     game_handler.run_game()
 
 
