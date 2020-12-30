@@ -67,12 +67,13 @@ class CommunicationHandler:
         this function is used when we are the host of the game. it waits for a specific ip to connect, initializes the
         communication and returns a code that represent the starting player
         :param str wanted_ip: the ip that we want to join us on a game
-        :return:
+        :return: a code that represent the starting player.
         """
         connected_address = ""
         self.comm_socket.listen()
         while connected_address != wanted_ip:
             self.game_socket, (connected_address, _) = self.comm_socket.accept()
+        return self._init_game_as_host()
 
     def _init_game_as_host(self):
         """
