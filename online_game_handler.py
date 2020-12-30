@@ -84,6 +84,8 @@ class OnlineGameHandler:
                     return False
             elif rival_answer_code == ERROR_CODE and extra_arguments[0] == INVALID_COORDINATES_ERROR_CODE:
                 print("Invalid coordinates supplied. try again.")
+            elif rival_answer_code == CONNECTION_CLOSED_CODE:
+                return False
 
         self._change_turn()
         return True
@@ -107,6 +109,8 @@ class OnlineGameHandler:
                         print("You have lost.")
                         return False
                     print(GUESS_ANSWER_TO_MESSAGE[my_answer])
+            elif rival_message_code == CONNECTION_CLOSED_CODE:
+                return False
 
         self._change_turn()
         return True
