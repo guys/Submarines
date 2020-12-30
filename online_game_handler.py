@@ -19,7 +19,7 @@ class OnlineGameHandler:
     someone wins.
     """
 
-    def __init__(self, i_start, game_socket, board_manager):
+    def __init__(self, i_start, game_socket, board_manager, io_manager):
         """
         a C'tor for the OnlineGameHandler.
         :param bool i_start: True if we start the game, False otherwise.
@@ -30,6 +30,7 @@ class OnlineGameHandler:
         self.my_turn = i_start
         self.game_socket = game_socket
         self.board_manager = board_manager
+        self.io_manager = io_manager
 
     def _change_turn(self):
         """
