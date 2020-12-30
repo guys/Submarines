@@ -14,6 +14,7 @@ import sys
 USAGE_MESSAGE = "Incorrect Usage.\nThe correct usage is:\npython submarines.py [ip address of the other player]"
 ERROR_RETURN_CODE = -1
 OK_RETURN_CODE = 0
+LOCAL_ADDRESS = "0.0.0.0"
 
 
 def are_arguments_valid(supplied_arguments):
@@ -29,6 +30,22 @@ def are_arguments_valid(supplied_arguments):
     if len(argument_ip_fields) != 4 or not "".join(argument_ip_fields).isnumeric():
         return False
     return True
+
+
+def does_user_wants_to_start():
+    """
+    a function that checks if the user wants to start the game.
+    :return: True if the user wants to start, False otherwise.
+    """
+    return input("Do you want to be the starting player? (y for yes)") == "y"
+
+
+def does_user_wants_to_host_the_game():
+    """
+    a function that checks if the user wants to be the host of the game.
+    :return: True if the user wants to be the host, False otherwise.
+    """
+    return input("Do you want to host the game? (y for yes)") == "y"
 
 
 def main():
