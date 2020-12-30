@@ -76,6 +76,8 @@ class OnlineGameHandler:
                 if rival_answer == WIN_CODE:
                     self.finish_game()
                     return False
+            elif rival_answer_code == ERROR_CODE and extra_arguments[0] == INVALID_COORDINATES_ERROR_CODE:
+                print("Invalid coordinates supplied. try again.")
 
         self._change_turn()
         return True
