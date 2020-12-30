@@ -119,12 +119,12 @@ class CommunicationHandler:
         try:
             message_code = list(self.game_socket.recv(FIELD_SIZE))[0]  # done in order to convert from bytes to a number
         except (socket.error, socket.timeout) as socket_exception:
-            return 50, []
+            return CONNECTION_CLOSED_CODE, []
         for _ in range(CODES_TO_NUMBER_OF_ARGUMENTS[message_code]):
             try:
                 extra_arguments.append(list(self.game_socket.recv(FIELD_SIZE))[0])
             except (socket.error, socket.timeout) as socket_exception:
-                return 50, []
+                return CONNECTION_CLOSED_CODE, []
 
         return message_code, extra_arguments
 
