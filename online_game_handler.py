@@ -11,7 +11,15 @@
     Change Log:
     29/12/2020 - Created
 """
-import Communication.communication_handler
+from Communication.communication_handler import *
+
+GUESS_ANSWER_TO_MESSAGE = {
+    HIT_CODE: "You bombed a submarine!",
+    SINK_CODE: "You sank a submarine!",
+    WIN_CODE: "You have won!",
+    MISS_CODE: "You have missed."
+}
+
 
 class OnlineGameHandler:
     """
@@ -56,11 +64,30 @@ class OnlineGameHandler:
         this function runs the turn of this user.
         :return: True if the game continues, False if it ends.
         """
-        pass
+        rival_answer = HIT_CODE
+        while rival_answer != MISS_CODE:
+            attack_position = self.io_manager.ask_user_for_attack_input()
+            self.comm_handler.send_message(GUESS_CODE, [*attack_position])
+            rival_answer_code, extra_arguments = self.comm_handler.recv_message()
+            if rival_answer_code == GUESS_ANSWER_CODE:
+                rival_answer = extra_arguments[0]
+                print(GUESS_ANSWER_TO_MESSAGE[rival_answer])
+                if rival_answer == WIN_CODE:
+                    self.finish_game()
+                    return False
+
+        self._change_turn()
+        return True
 
     def run_rival_turn(self):
         """
         this function runs the turn when this is the rivals turn.
         :return: True if the game continues, False if it ends.
+        """
+        pass
+
+    def finish_game(self):
+        """
+        this function is used to clean all of the resources and exit the game.
         """
         pass
