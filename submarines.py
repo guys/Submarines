@@ -11,10 +11,19 @@
     30/12/2020 - Created
 """
 import sys
+import socket
+from Communication.communication_handler import CommunicationHandler, COMMUNICATION_PORT
+from Game.board_manager import BoardManager
+from Game.user_io import IOHandler
+from online_game_handler import OnlineGameHandler
+
+
 USAGE_MESSAGE = "Incorrect Usage.\nThe correct usage is:\npython submarines.py [ip address of the other player]"
 ERROR_RETURN_CODE = -1
 OK_RETURN_CODE = 0
 LOCAL_ADDRESS = "0.0.0.0"
+BOARD_DIMENSIONS = 10
+SUBMARINE_SIZES = [2, 3, 3, 4, 5]
 
 
 def are_arguments_valid(supplied_arguments):
@@ -48,10 +57,48 @@ def does_user_wants_to_host_the_game():
     return input("Do you want to host the game? (y for yes)") == "y"
 
 
+def init_communication_handler(wanted_rival_ip):
+    """
+    a function to start the communication between the user and the rival.
+    :param str wanted_rival_ip: the ip of the rival.
+    :return: the communication handler and a boolean value stating if the user starts.
+    """
+    user_socket = socket.socket()
+    comm_handler = None
+    starting_player = False
+
+    if does_user_wants_to_host_the_game():
+        user_socket.bind((LOCAL_ADDRESS, COMMUNICATION_PORT))
+        comm_handler = CommunicationHandler(user_socket)
+        starting_player = comm_handler.wait_for_player(wanted_rival_ip)
+    else:
+        starting_player = does_user_wants_to_start()
+        comm_handler = CommunicationHandler(user_socket)
+        comm_handler.init_game_as_guest(wanted_rival_ip, not starting_player)
+
+    return comm_handler, starting_player
+
+
+def run_game(comm_handler, is_starting):
+    """
+    a function to run the game.
+    :param CommunicationHandler comm_handler: the communication handler used in this game.
+    :param bool is_starting: does our user start.
+    """
+    io_handler = IOHandler()
+    board = io_handler.get_board(BOARD_DIMENSIONS, SUBMARINE_SIZES)
+    board_manager = BoardManager(board, len(SUBMARINE_SIZES))
+    game_handler = OnlineGameHandler(is_starting, board_manager, io_handler, comm_handler)
+    game_handler.run_game()
+
+
 def main():
     if not are_arguments_valid(sys.argv):
         print(USAGE_MESSAGE)
         return ERROR_RETURN_CODE
+    wanted_rival_ip = sys.argv[1]
+    comm_handler, is_starting = init_communication_handler(wanted_rival_ip)
+    run_game(comm_handler, is_starting)
     return OK_RETURN_CODE
 
 
