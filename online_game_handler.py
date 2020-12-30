@@ -90,4 +90,4 @@ class OnlineGameHandler:
         """
         this function is used to clean all of the resources and exit the game.
         """
-        pass
+        self.comm_handler.close_communication()
