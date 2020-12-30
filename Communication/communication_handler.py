@@ -142,6 +142,16 @@ class CommunicationHandler:
             return False
         return True
 
+    def send_wait_ready(self):
+        """
+        a function used when the user is ready, sends a ready message to the rival and waits for his response.
+        """
+        self.send_message(READY_CODE, [])
+        message_code, arguments = self.recv_message()
+        while message_code != READY_CODE:
+            self.send_message(ERROR_CODE, [INVALID_TYPE_ERROR_CODE])
+            message_code, arguments = self.recv_message()
+
     def close_communication(self):
         """
         a function used to close the sockets for the cleanup of resources.
