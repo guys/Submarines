@@ -22,6 +22,7 @@ MISS_RETURN_VALUE = 0
 HIT_RETURN_VALUE = 1
 SINK_RETURN_VALUE = 2
 VICTORY_RETURN_VALUE = 3
+INVALID_COORDINATES_RETURN_VALUE = 4
 
 
 class BoardManager:
@@ -50,6 +51,8 @@ class BoardManager:
         :return: SINK if the submarine is now sinking, HIT if the submarine was hit but is not sinking and miss if
                  there was no submarine in the given location.
         """
+        if attack_x < 0 or attack_x >= len(self.game_board[0]) or attack_y < 0 or attack_y >= len(self.game_board):
+            return INVALID_COORDINATES_RETURN_VALUE
         cell_attacked = self.game_board[attack_y][attack_x]
         attacked_submarine = cell_attacked[TUPLE_SUBMARINE_POSITION]
 
