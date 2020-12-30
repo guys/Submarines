@@ -11,6 +11,9 @@
     30/12/2020 - Created
 """
 import sys
+USAGE_MESSAGE = "Incorrect Usage.\nThe correct usage is python submarines.py [ip address of the other player]"
+ERROR_RETURN_CODE = -1
+OK_RETURN_CODE = 0
 
 
 def are_arguments_valid(supplied_arguments):
@@ -29,7 +32,10 @@ def are_arguments_valid(supplied_arguments):
 
 
 def main():
-    pass
+    if not are_arguments_valid(sys.argv):
+        print(USAGE_MESSAGE)
+        return ERROR_RETURN_CODE
+    return OK_RETURN_CODE
 
 
 if __name__ == '__main__':
