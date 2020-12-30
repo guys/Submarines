@@ -11,7 +11,7 @@
     Change Log:
     29/12/2020 - Created
 """
-
+import Communication.communication_handler
 
 class OnlineGameHandler:
     """
@@ -19,18 +19,21 @@ class OnlineGameHandler:
     someone wins.
     """
 
-    def __init__(self, i_start, game_socket, board_manager, io_manager):
+    def __init__(self, i_start, game_socket, board_manager, io_manager, communication_handler):
         """
         a C'tor for the OnlineGameHandler.
         :param bool i_start: True if we start the game, False otherwise.
         :param socket.socket game_socket: the socket on which the game runs.
         :param BoardManager board_manager: the board manager for this client's game.
+        :param IOHandler io_manager: the io manager used.
+        :param CommunicationHandler communication_handler: the communication handler used.
         :return: a new OnlineGameHandler is created.
         """
         self.my_turn = i_start
         self.game_socket = game_socket
         self.board_manager = board_manager
         self.io_manager = io_manager
+        self.comm_handler = communication_handler
 
     def _change_turn(self):
         """
