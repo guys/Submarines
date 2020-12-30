@@ -12,12 +12,13 @@
     29/12/2020 - Created
 """
 from Communication.communication_handler import *
+from Game.board_manager import INVALID_COORDINATES_RETURN_VALUE, VICTORY_RETURN_VALUE
 
 GUESS_ANSWER_TO_MESSAGE = {
-    HIT_CODE: "You bombed a submarine!",
-    SINK_CODE: "You sank a submarine!",
+    HIT_CODE: "hit.",
+    SINK_CODE: "submarine sank",
     WIN_CODE: "You have won!",
-    MISS_CODE: "You have missed."
+    MISS_CODE: "miss"
 }
 
 
@@ -84,7 +85,24 @@ class OnlineGameHandler:
         this function runs the turn when this is the rivals turn.
         :return: True if the game continues, False if it ends.
         """
-        pass
+        my_answer = HIT_CODE
+        while my_answer != MISS_CODE:
+            rival_message_code, extra_arguments = self.comm_handler.recv_message()
+            if rival_message_code == GUESS_CODE:
+                attack_x, attack_y = extra_arguments[0], extra_arguments[1]
+                my_answer = self.board_manager.answer_attack_attempt(attack_x, attack_y)
+                if my_answer == INVALID_COORDINATES_RETURN_VALUE:
+                    self.comm_handler.send_message(ERROR_CODE, [INVALID_COORDINATES_ERROR_CODE])
+                else:
+                    if my_answer == VICTORY_RETURN_VALUE:
+                        print("You have lost.")
+                        self.finish_game()
+                        return False
+                    print(GUESS_ANSWER_TO_MESSAGE[my_answer])
+                    self.comm_handler.send_message(GUESS_ANSWER_CODE, [my_answer])
+
+        self._change_turn()
+        return True
 
     def finish_game(self):
         """
