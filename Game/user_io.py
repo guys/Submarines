@@ -48,11 +48,11 @@ class IOHandler:
                 starting_pos, direction = self._get_submarine_input(submarine_size)
 
             current_submarine = Submarine(submarine_size)
-            for location in self._calculate_submarine_positions_by_start_and_direction(
+            for sub_position in self._calculate_submarine_positions_by_start_and_direction(
                     submarine_size, starting_pos, direction):
 
-                submarines_locations.append(location)
-                board[location[1]][location[0]] = (0, current_submarine)
+                submarines_locations.append(sub_position)
+                board[sub_position[1]][sub_position[0]] = (0, current_submarine)
 
         return board
 
