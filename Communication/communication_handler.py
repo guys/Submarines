@@ -83,9 +83,9 @@ class CommunicationHandler:
         message_code, arguments = self.recv_message()
         while message_code != OFFER_CODE or (arguments[0] != HOST_STARTS_CODE and arguments[0] != GUEST_STARTS_CODE):
             if message_code == OFFER_CODE:
-                self.send_message(ERROR_CODE, [INVALID_TYPE_ERROR_CODE])
-            else:
                 self.send_message(ERROR_CODE, [INVALID_OFFER_ERROR_CODE])
+            else:
+                self.send_message(ERROR_CODE, [INVALID_TYPE_ERROR_CODE])
             message_code, arguments = self.recv_message()
 
         self.send_message(OFFER_ACCEPTED_CODE, [])
