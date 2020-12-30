@@ -51,6 +51,7 @@ class BoardManager:
         attacked_submarine = cell_attacked[TUPLE_SUBMARINE_POSITION]
 
         if cell_attacked[TUPLE_STATUS_CODE_POSITION] == NOT_HIT_STATUS_CODE and attacked_submarine:
+            cell_attacked[TUPLE_STATUS_CODE_POSITION] = WAS_HIT_STATUS_CODE
             attacked_submarine.take_hit()
             if attacked_submarine.is_sinking():
                 return SINK_RETURN_VALUE
