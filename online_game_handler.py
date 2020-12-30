@@ -55,19 +55,19 @@ class OnlineGameHandler:
         """
         should_exit = False
         while not should_exit:
-            should_exit = not self.run_turn()
+            should_exit = not self._run_turn()
         self.finish_game()
 
-    def run_turn(self):
+    def _run_turn(self):
         """
         this function is used to run a single turn according to whose turn it is.
         :return: True if the game continues, False if it ends.
         """
         if self.my_turn:
-            return self.run_my_turn()
-        return self.run_rival_turn()
+            return self._run_my_turn()
+        return self._run_rival_turn()
 
-    def run_my_turn(self):
+    def _run_my_turn(self):
         """
         this function runs the turn of this user.
         :return: True if the game continues, False if it ends.
@@ -88,7 +88,7 @@ class OnlineGameHandler:
         self._change_turn()
         return True
 
-    def run_rival_turn(self):
+    def _run_rival_turn(self):
         """
         this function runs the turn when this is the rivals turn.
         :return: True if the game continues, False if it ends.
