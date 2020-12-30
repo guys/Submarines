@@ -51,6 +51,15 @@ class OnlineGameHandler:
         """
         self.my_turn ^= 1
 
+    def run_game(self):
+        """
+        this function is used to run the game as a whole - until someone wins.
+        """
+        should_exit = False
+        while not should_exit:
+            should_exit = not self.run_turn()
+        self.finish_game()
+
     def run_turn(self):
         """
         this function is used to run a single turn according to whose turn it is.
@@ -74,7 +83,6 @@ class OnlineGameHandler:
                 rival_answer = extra_arguments[0]
                 print(GUESS_ANSWER_TO_MESSAGE[rival_answer])
                 if rival_answer == WIN_CODE:
-                    self.finish_game()
                     return False
             elif rival_answer_code == ERROR_CODE and extra_arguments[0] == INVALID_COORDINATES_ERROR_CODE:
                 print("Invalid coordinates supplied. try again.")
@@ -98,7 +106,6 @@ class OnlineGameHandler:
                 else:
                     if my_answer == VICTORY_RETURN_VALUE:
                         print("You have lost.")
-                        self.finish_game()
                         return False
                     print(GUESS_ANSWER_TO_MESSAGE[my_answer])
                     self.comm_handler.send_message(GUESS_ANSWER_CODE, [my_answer])
