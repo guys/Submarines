@@ -21,6 +21,7 @@ WAS_HIT_STATUS_CODE = 1
 MISS_RETURN_VALUE = 0
 HIT_RETURN_VALUE = 1
 SINK_RETURN_VALUE = 2
+VICTORY_RETURN_VALUE = 3
 
 
 class BoardManager:
@@ -28,15 +29,17 @@ class BoardManager:
     a class for managing the board - contains the board of the game and returns answers to attack attempts
     """
 
-    def __init__(self, game_board):
+    def __init__(self, game_board, number_of_submarines):
         """
         a C'tor for the board manager - sets the game board to be in the given state.
         :param list(list(tuple)) game_board: the game board which is a list of list of tuples that contain a status
                                              code for the cell(was hit or not) and the submarine in it(None if there is
                                              no submarine in it.
+        :param int number_of_submarines: the number of submarines on the board.
         :return: a new BoardManager instance is created.
         """
         self.game_board = game_board
+        self.number_of_submarines = number_of_submarines
 
     def answer_attack_attempt(self, attack_x, attack_y):
         """
@@ -54,6 +57,9 @@ class BoardManager:
             cell_attacked[TUPLE_STATUS_CODE_POSITION] = WAS_HIT_STATUS_CODE
             attacked_submarine.take_hit()
             if attacked_submarine.is_sinking():
+                self.number_of_submarines -= 1
+                if self.number_of_submarines == 0:
+                    return VICTORY_RETURN_VALUE
                 return SINK_RETURN_VALUE
             return HIT_RETURN_VALUE
         return MISS_RETURN_VALUE
