@@ -37,7 +37,7 @@ class OnlineGameHandler:
         :param CommunicationHandler communication_handler: the communication handler used.
         :return: a new OnlineGameHandler is created.
         """
-        self.my_turn = i_start
+        self.is_my_turn = i_start
         self.board_manager = board_manager
         self.io_manager = io_manager
         self.comm_handler = communication_handler
@@ -47,7 +47,7 @@ class OnlineGameHandler:
         this function is used to change the turn ownership.
         :return: changes my_turn from True to False and vice-versa.
         """
-        self.my_turn ^= 1
+        self.is_my_turn = not self.is_my_turn
 
     def run_game(self):
         """
@@ -63,7 +63,7 @@ class OnlineGameHandler:
         this function is used to run a single turn according to whose turn it is.
         :return: True if the game continues, False if it ends.
         """
-        if self.my_turn:
+        if self.is_my_turn:
             return self._run_my_turn()
         return self._run_rival_turn()
 
