@@ -104,11 +104,11 @@ class OnlineGameHandler:
                 if my_answer == INVALID_COORDINATES_RETURN_VALUE:
                     self.comm_handler.send_message(ERROR_CODE, [INVALID_COORDINATES_ERROR_CODE])
                 else:
+                    self.comm_handler.send_message(GUESS_ANSWER_CODE, [my_answer])
                     if my_answer == VICTORY_RETURN_VALUE:
                         print("You have lost.")
                         return False
                     print(GUESS_ANSWER_TO_MESSAGE[my_answer])
-                    self.comm_handler.send_message(GUESS_ANSWER_CODE, [my_answer])
 
         self._change_turn()
         return True
